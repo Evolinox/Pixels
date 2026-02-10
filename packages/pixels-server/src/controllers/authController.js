@@ -41,3 +41,38 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
     res.json({ token });
 };
+
+exports.devResetPassword = async (req, res) => {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+        return res.status(400).json({ error: "Email and newPassword are required." });
+    }
+
+    try {
+        // Optional safety: block this in production
+        if (process.env.NODE_ENV === "production") {
+            return res.status(403).json({ error: "Not allowed in production." });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { email }
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        await prisma.user.update({
+            where: { email },
+            data: { password: hashedPassword }
+        });
+
+        res.json({ message: "Password reset successfully (dev)." });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
