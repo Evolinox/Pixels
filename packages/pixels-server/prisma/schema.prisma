@@ -1,0 +1,78 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique
+  email     String    @unique
+  firstname String
+  lastname  String
+  descr     String    @default("")
+  password  String
+  avatar    String    @default("avatar.webp")
+  banner    String    @default("banner.webp")
+  pictures  Picture[]
+  albums    Album[]
+  comments  Comment[]
+}
+
+model Picture {
+  id           Int            @id @default(autoincrement())
+  userId       Int
+  user         User           @relation(fields: [userId], references: [id])
+  url          String
+  title        String
+  descr        String
+  createdAt    DateTime       @default(now())
+  albums       AlbumPicture[]
+  comments     Comment[]
+  // Locationdate
+  location     String?
+  latitude     Float?
+  longitude    Float?
+  // Camera Metadata
+  cameraModel  String?
+  aperture     String?
+  focalLength  String?
+  iso          Int?
+  shutterSpeed String?
+  resolution   String?
+  megapixel    String?
+}
+
+model Album {
+  id        Int            @id @default(autoincrement())
+  userId    Int
+  user      User           @relation(fields: [userId], references: [id])
+  name      String
+  descr     String
+  createdAt DateTime       @default(now())
+  pictures  AlbumPicture[]
+}
+
+model AlbumPicture {
+  album     Album   @relation(fields: [albumId], references: [id])
+  albumId   Int
+  picture   Picture @relation(fields: [pictureId], references: [id])
+  pictureId Int
+
+  @@id([albumId, pictureId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  pictureId Int
+  picture   Picture  @relation(fields: [pictureId], references: [id])
+}

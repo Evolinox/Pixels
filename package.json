@@ -1,0 +1,13 @@
+{
+  "name": "pixels",
+  "private": true,
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.13.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "app:dev": "pnpm --filter pixels-app dev",
+    "server:dev": "pnpm --filter pixels-server start"
+  }
+}
