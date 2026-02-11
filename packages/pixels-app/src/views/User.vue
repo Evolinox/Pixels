@@ -82,7 +82,7 @@ const resolvedBannerUrl = computed(() => {
         <ScrollArea>
             <div id="profileInfoBox">
                 <div>
-                    <img class="w-full h-64 object-cover rounded-lg" :src="resolvedBannerUrl" alt="" />
+                    <img class="w-full h-64 object-cover border-b" :src="resolvedBannerUrl" alt="" />
                 </div>
                 <!-- Avatar + Info Section -->
                 <div class="flex items-center px-4 -mt-12">

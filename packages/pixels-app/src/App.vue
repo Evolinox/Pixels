@@ -25,10 +25,10 @@ onMounted(() => {
       '--header-height': 'calc(var(--spacing) * 12)',
     }"
     >
-        <AppSidebar variant="inset" />
+        <AppSidebar />
         <SidebarInset>
             <SiteHeader />
-            <router-view />
+            <RouterView />
         </SidebarInset>
     </SidebarProvider>
     <Toaster />
