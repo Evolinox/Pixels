@@ -22,26 +22,18 @@ function routeTo(link: string) {
     <SidebarGroup>
         <SidebarGroupContent class="flex flex-col gap-2">
             <SidebarMenu>
-                <SidebarMenuItem class="flex items-center gap-2">
-                    <SidebarMenuButton
-                        @click="routeTo('/create')"
-                        tooltip="Quick Create"
-                        class="bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground min-w-8 duration-200 ease-linear"
-                    >
-                        <ImagePlus />
-                        <span>Create</span>
-                    </SidebarMenuButton>
-                </SidebarMenuItem>
-            </SidebarMenu>
-            <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton @click="routeTo('/')" tooltip="Feed">
+                    <SidebarMenuButton @click="routeTo('/')" tooltip="See what your Friends have posted!">
                         <House/>
                         <span>Feed</span>
                     </SidebarMenuButton>
-                    <SidebarMenuButton @click="routeTo('/explore')" tooltip="Explore">
+                    <SidebarMenuButton @click="routeTo('/explore')" tooltip="Explore new Pictures by other People!">
                         <Telescope/>
                         <span>Explore</span>
+                    </SidebarMenuButton>
+                    <SidebarMenuButton @click="routeTo('/post')" tooltip="Upload new Pictures!">
+                        <ImagePlus/>
+                        <span>Create</span>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
             </SidebarMenu>

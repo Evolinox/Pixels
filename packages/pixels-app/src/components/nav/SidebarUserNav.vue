@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {EllipsisVertical, LogOut, Bell, CircleUser} from 'lucide-vue-next'
+import {EllipsisVertical, LogOut, Bell, CircleUser, Settings } from 'lucide-vue-next'
 
 import {
     Avatar,
@@ -50,6 +50,11 @@ route to sidebar item
 function routeTo(link: string) {
     router.push(`${link}`);
 }
+
+function logOutUser() {
+    userStore.clearToken();
+    router.push("/auth/login");
+}
 </script>
 
 <template>
@@ -77,7 +82,7 @@ function routeTo(link: string) {
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
-                    class="w-(--reka-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                    class="w-(--reka-dropdown-menu-trigger-width) min-w-52 rounded-lg"
                     :side="isMobile ? 'bottom' : 'right'"
                     :side-offset="4"
                     align="end"
@@ -104,13 +109,17 @@ function routeTo(link: string) {
                             <CircleUser/>
                             Account
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem @click="routeTo('/notifications')">
                             <Bell/>
                             Notifications
                         </DropdownMenuItem>
+                        <DropdownMenuItem @click="routeTo('/settings')">
+                            <Settings/>
+                            Settings
+                        </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator/>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem @click="logOutUser()">
                         <LogOut/>
                         Log out
                     </DropdownMenuItem>

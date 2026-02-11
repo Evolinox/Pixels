@@ -62,7 +62,7 @@ const handleSubmit = async () => {
         <div class="grid gap-6">
             <div class="grid gap-2">
                 <Label for="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" v-model="email" required />
+                <Input id="email" type="email" placeholder="max@pixels.net" v-model="email" required />
             </div>
             <div class="grid gap-2">
                 <Label for="password">Password</Label>
