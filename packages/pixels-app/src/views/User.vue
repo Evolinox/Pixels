@@ -4,6 +4,7 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {useRoute} from 'vue-router';
 import {useUserStore} from "@/stores/user.store.ts";
+import { Pin, AtSign } from 'lucide-vue-next'
 // Placeholders
 import defaultAvatar from '@/assets/avatar.webp'
 import defaultBanner from '@/assets/banner.webp'
@@ -55,7 +56,7 @@ onMounted(async () => {
             userEmail.value = data.email;
             userFirstName.value = data.firstname;
             userLastName.value = data.lastname;
-            userDescription.value = data.descr;
+            userDescription.value = data.descr || "Keine Informationen angegeben.";
             userAvatarUrl.value = data.avatar;
             userBannerUrl.value = data.banner;
         }
@@ -64,13 +65,13 @@ onMounted(async () => {
 
 const resolvedAvatarUrl = computed(() => {
     if (userAvatarUrl && userAvatarUrl.value.startsWith('http')) {
-        return userAvatarUrl
+        return userAvatarUrl.value
     }
     return defaultAvatar
 })
 const resolvedBannerUrl = computed(() => {
     if (userBannerUrl && userBannerUrl.value.startsWith('http')) {
-        return userBannerUrl
+        return userBannerUrl.value
     }
     return defaultBanner
 })
@@ -78,18 +79,15 @@ const resolvedBannerUrl = computed(() => {
 
 <template>
     <Dialog>
-        <div id="header" class="h-10 content-center text-center fixed z-50 top-0 left-0 w-full">
-            <h1>@{{ userName }}</h1>
-        </div>
-        <ScrollArea class="mt-10">
+        <ScrollArea>
             <div id="profileInfoBox">
                 <div>
-                    <img class="w-full h-44 object-cover" :src="resolvedBannerUrl" alt="" />
+                    <img class="w-full h-64 object-cover rounded-lg" :src="resolvedBannerUrl" alt="" />
                 </div>
                 <!-- Avatar + Info Section -->
-                <div class="flex items-center px-4 -mt-14">
+                <div class="flex items-center px-4 -mt-12">
                     <!-- Avatar on the left -->
-                    <div class="w-32 h-32 rounded-full border-4 border-white overflow-hidden shadow-md">
+                    <div class="w-32 h-32 rounded-lg border-4 overflow-hidden shadow-md">
                         <img
                             :src="resolvedAvatarUrl"
                             alt="Avatar"
@@ -99,8 +97,17 @@ const resolvedBannerUrl = computed(() => {
 
                     <!-- User info on the right -->
                     <div class="ml-4 mt-16">
-                        <h1 class="text-xl font-semibold">{{ userFirstName + " " + userLastName }}</h1>
-                        <p class="text-gray-500">aus Mosbach (Baden)</p>
+                        <h1 class="text-xl font-semibold">
+                            {{ userFirstName + " " + userLastName }}
+                        </h1>
+                        <div class="flex items-center text-gray-500 space-x-1">
+                            <AtSign class="w-4 h-4" />
+                            <span>{{ userName }}</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 space-x-1">
+                            <Pin class="w-4 h-4" />
+                            <span>Mosbach (Baden)</span>
+                        </div>
                     </div>
 
                     <div class="ml-auto mr-4 mt-16">
@@ -116,7 +123,7 @@ const resolvedBannerUrl = computed(() => {
                 </div>
                 <!-- About Box -->
                 <div class="mt-4 px-6 py-2 border-t text-left">
-                    <p class="text-gray-700 mt-0 leading-relaxed">
+                    <p class="text-gray-500 mt-0 leading-relaxed">
                         {{ userDescription }}
                     </p>
                 </div>
