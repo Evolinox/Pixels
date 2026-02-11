@@ -1,23 +1,28 @@
 import { jwtDecode } from 'jwt-decode';
 import { useUserStore } from '../stores/user.store';
 
-export function isLoggedIn() {
+export function isLoggedIn(): boolean {
     const userStore = useUserStore();
-    let token = userStore.getUserToken;
+    const token = userStore.getUserToken;
 
     if (!token) {
-        return false
-    } else {
-        return true
-    }
-    /* Token expiry check... still wip as it currently is broken
-    try {
-        const decoded = jwtDecode<{ exp: number }>(token);
-        const now = Date.now() / 1000;
-        return decoded.exp > now;
-    } catch (error) {
-        console.error('Invalid token:', error);
         return false;
     }
-     */
+/*
+    try {
+        const { exp } = jwtDecode<{ exp: number }>(token);
+        const now = Math.floor(Date.now() / 1000);
+
+        const isValid = exp > now;
+
+        if (!isValid) {
+            userStore.clearToken(); // auto-logout on expiration
+        }
+
+        return isValid;
+    } catch (error) {
+        console.error('Invalid token:', error);
+        userStore.clearToken() // corrupted token → force logout
+        return false;
+    }*/return true;
 }
