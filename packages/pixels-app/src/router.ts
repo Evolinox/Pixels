@@ -5,7 +5,6 @@ import AuthLayout from '@/layouts/AuthLayout.vue'
 
 import { isLoggedIn } from '@/utils/auth.ts';
 import { useDataStore } from "@/stores/data.store.ts";
-import { useUserStore } from "@/stores/user.store.ts";
 
 const routes : any[] = [
     {
@@ -84,7 +83,6 @@ const router = createRouter({
 
 router.beforeEach((to, _from, next) => {
     const dataStore = useDataStore();
-    const userStore = useUserStore();
 
     console.log(isLoggedIn());
     if (to.meta.requiresAuth && !isLoggedIn()) {
