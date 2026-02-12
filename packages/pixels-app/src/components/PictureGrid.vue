@@ -4,15 +4,21 @@ import PictureCard from './PictureCard.vue'
 import { toast } from 'vue-sonner'
 
 const props = defineProps<{
-    userId: string;
+    userId?: string;
 }>();
 
 const userId = props.userId;
 const pictures = ref([]);
 
 onMounted(async () => {
+    let apiEndpoint: string;
     try {
-        const response = await fetch(`/pixels-api/pictures/latest?userId=${userId}`, {
+        if (userId) {
+            apiEndpoint = `/pixels-api/pictures/latest?userId=${userId}`;
+        } else {
+            apiEndpoint = `/pixels-api/pictures/latest`;
+        }
+        const response = await fetch(apiEndpoint, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,7 +45,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <PictureCard
             v-for="pic in pictures"
             :key="pic.id"

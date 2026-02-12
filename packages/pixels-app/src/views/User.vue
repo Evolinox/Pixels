@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from "vue";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {useRoute} from 'vue-router';
 import {useUserStore} from "@/stores/user.store.ts";
@@ -130,29 +129,8 @@ const resolvedBannerUrl = computed(() => {
                 <div class="border-t mb-4">
                 </div>
             </div>
-            <div class="content-view">
-                <Tabs default-value="activity" class="ml-4 mr-4">
-                    <TabsList class="w-full">
-                        <TabsTrigger value="activity">
-                            Activity
-                        </TabsTrigger>
-                        <TabsTrigger value="photos">
-                            Photos
-                        </TabsTrigger>
-                        <TabsTrigger value="albums">
-                            Albums
-                        </TabsTrigger>
-                    </TabsList>
-                    <TabsContent value="activity">
-                        Here you will see the users activity
-                    </TabsContent>
-                    <TabsContent value="photos">
-                        <PictureGrid :userId="userId"/>
-                    </TabsContent>
-                    <TabsContent value="albums">
-                        Here you will see the users albums
-                    </TabsContent>
-                </Tabs>
+            <div class="flex justify-center items-center px-4 pb-4">
+                <PictureGrid :userId="userId"/>
             </div>
         </ScrollArea>
         <DialogContent>
@@ -200,11 +178,3 @@ const resolvedBannerUrl = computed(() => {
         </DialogContent>
     </Dialog>
 </template>
-
-<style>
-.content-view {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-</style>
