@@ -72,6 +72,12 @@ const routes : any[] = [
                 meta: { requiresAuth: true, updatesTitle: true },
                 component: () => import('@/views/Settings.vue'),
             },
+            {
+                path: 'liked',
+                name: 'Liked',
+                meta: { requiresAuth: true, updatesTitle: true },
+                component: () => import('@/views/Liked.vue'),
+            },
         ]
     },
 ]

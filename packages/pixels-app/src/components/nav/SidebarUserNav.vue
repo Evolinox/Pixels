@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {EllipsisVertical, LogOut, Bell, CircleUser, Settings } from 'lucide-vue-next'
+import { EllipsisVertical, LogOut, Bell, CircleUser, Settings, Heart } from 'lucide-vue-next'
 
 import {
     Avatar,
@@ -108,6 +108,10 @@ function logOutUser() {
                         <DropdownMenuItem @click="routeTo('/me')">
                             <CircleUser/>
                             Account
+                        </DropdownMenuItem>
+                        <DropdownMenuItem @click="routeTo('/liked')">
+                            <Heart/>
+                            Liked
                         </DropdownMenuItem>
                         <DropdownMenuItem @click="routeTo('/notifications')">
                             <Bell/>
