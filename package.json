@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "app:dev": "pnpm --filter pixels-app dev",
+    "app:tauri": "pnpm --filter pixels-app tauri",
     "server:dev": "pnpm --filter pixels-server start"
   }
 }
