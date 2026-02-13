@@ -130,7 +130,7 @@ const resolvedBannerUrl = computed(() => {
                 </div>
             </div>
             <div class="flex justify-center items-center px-4 pb-4">
-                <PictureGrid :userId="userId"/>
+                <PictureGrid v-if="userId" :userId="userId"/>
             </div>
         </ScrollArea>
         <DialogContent>

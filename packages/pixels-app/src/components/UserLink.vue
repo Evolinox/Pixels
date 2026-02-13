@@ -11,7 +11,7 @@ const userStore = useUserStore();
 
 // Props
 const props = defineProps({
-    userId: String,
+    userId: Number,
     timeStamp: String,
 })
 
@@ -73,7 +73,7 @@ function routeTo(link: string) {
 </script>
 
 <template>
-    <Button variant="ghost" @click="routeTo('/user/' + userName)">
+    <Button class="pl-0! w-full" variant="ghost" @click="routeTo('/user/' + userName)">
         <Avatar class="h-8 w-8 rounded-lg l-0">
             <AvatarImage :src="resolvedAvatarUrl" :alt="userFirstName"/>
         </Avatar>

@@ -9,44 +9,43 @@ import {
 import UserLink from "@/components/UserLink.vue";
 import ExifContainer from "@/components/ExifContainer.vue";
 import {ScrollArea} from "@/components/ui/scroll-area";
+import { Picture } from '@/types/types.pixels.ts'
 
 // Props
-const props = defineProps({
-    picture: {
-        type: Object,
-        required: true,
-        // Expected shape: { id: string | number, imageUrl: string }
-    },
-})
+const props = defineProps<{
+    picture: Picture
+}>()
 </script>
 
 <template>
     <Dialog>
         <DialogTrigger class="block w-full max-w-md overflow-hidden rounded-lg shadow-md transition-transform hover:scale-101" asChild >
             <img
-                :src="`/pixels-api/${picture.url}`"
+                :src="`/pixels-api/${props.picture.url}`"
                 :alt="`Picture ${picture.id}`"
                 class="w-full h-auto object-cover aspect-4/3"
             />
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent class="w-auto! lg:min-w-250">
             <DialogHeader>
-                <DialogTitle>{{ picture.title }}</DialogTitle>
+                <DialogTitle>{{ props.picture.title }}</DialogTitle>
             </DialogHeader>
-            <div class="flex items-start gap-4">
-                <div class="shrink-0 w-2/3">
+            <div class="flex items-stretch gap-4">
+                <div class="flex-1 max-w-300">
                     <img
-                        :src="`/pixels-api/${picture.url}`"
-                        :alt="`Picture ${picture.id}`"
-                        class="w-full h-auto rounded-lg"
+                        :src="`/pixels-api/${props.picture.url}`"
+                        :alt="`Picture ${props.picture.id}`"
+                        class="w-auto h-auto rounded-lg object-contain"
                     />
                 </div>
-                <div class="w-1/3">
-                    <UserLink :userId="picture.userId" :timeStamp="picture.createdAt" />
-                    <ScrollArea>
-                        {{ picture.descr }}
+                <div class="flex flex-col min-w-50 max-w-62.5 flex-1">
+                    <UserLink :userId="props.picture.userId" :timeStamp="props.picture.createdAt" />
+                    <ScrollArea class="flex-1 mt-2 text-m text-muted-foreground">
+                        {{ props.picture.descr }}
                     </ScrollArea>
-                    <ExifContainer :data="picture" />
+                    <div class="pt-2">
+                        <ExifContainer :picture="props.picture" />
+                    </div>
                 </div>
             </div>
         </DialogContent>

@@ -3,7 +3,7 @@ import PictureGrid from "@/components/PictureGrid.vue";
 </script>
 
 <template>
-    <div class="p-4">
+    <div class="flex justify-center items-center p-4">
         <PictureGrid/>
     </div>
 </template>

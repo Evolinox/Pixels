@@ -18,6 +18,7 @@ onMounted(async () => {
         } else {
             apiEndpoint = `/pixels-api/pictures/latest`;
         }
+        console.log(apiEndpoint);
         const response = await fetch(apiEndpoint, {
             method: 'GET',
             headers: {
