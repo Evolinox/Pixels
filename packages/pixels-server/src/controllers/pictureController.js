@@ -26,8 +26,12 @@ exports.getLatestPictures = async (req, res) => {
     const n = parseInt(count) || 10;
 
     try {
+        const where = {};
+        if (userId !== undefined) {
+            where.userId = parseInt(userId, 10);
+        }
         const pictures = await prisma.picture.findMany({
-            where: userId ? { userId: parseInt(userId) } : {},
+            where,
             orderBy: { id: 'desc' },
             take: n,
             include: {
