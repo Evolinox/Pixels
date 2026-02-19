@@ -32,6 +32,7 @@ model Picture {
   title        String
   descr        String
   createdAt    DateTime       @default(now())
+  takenAt      DateTime?
   albums       AlbumPicture[]
   comments     Comment[]
   // Locationdate

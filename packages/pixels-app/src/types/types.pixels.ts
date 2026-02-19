@@ -5,6 +5,7 @@ export interface Picture {
     title: string,
     descr: string,
     createdAt: string,
+    takenAt: string,
     location: string,
     cameraModel: string,
     aperture: string,

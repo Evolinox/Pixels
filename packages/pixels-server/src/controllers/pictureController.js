@@ -9,7 +9,26 @@ exports.uploadPicture = async (req, res) => {
             url: `/storage/${file.filename}`,
             userId: req.user.id,
             title: req.body.title,
-            descr: req.body.descr
+            descr: req.body.descr,
+            takenAt: req.body.takenAt,
+            location: req.body.location ?? null,
+            latitude: req.body.latitude
+                ? parseFloat(req.body.latitude)
+                : null,
+            longitude: req.body.longitude
+                ? parseFloat(req.body.longitude)
+                : null,
+
+            // Camera
+            cameraModel: req.body.cameraModel ?? null,
+            aperture: req.body.aperture ?? null,
+            focalLength: req.body.focalLength ?? null,
+            iso: req.body.iso
+                ? parseInt(req.body.iso)
+                : null,
+            shutterSpeed: req.body.shutterSpeed ?? null,
+            resolution: req.body.resolution ?? null,
+            megapixel: req.body.megapixel ?? null
         }
     });
 

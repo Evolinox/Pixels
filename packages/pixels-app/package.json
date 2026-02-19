@@ -16,6 +16,7 @@
     "@vueuse/core": "^13.9.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "exifreader": "^4.36.2",
     "jwt-decode": "^4.0.0",
     "lucide-vue-next": "^0.503.0",
     "pinia": "^3.0.2",
