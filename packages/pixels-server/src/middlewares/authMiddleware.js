@@ -1,35 +1,19 @@
-/* old version:
-const jwt = require('jsonwebtoken');
-
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-
-    if (!token) return res.sendStatus(401);
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-}
-
-module.exports = authenticateToken;
-*/
 const { verifyToken } = require('../utils/jwt');
+const { sendErrorResponse } = require('../utils/errorPage');
 
 module.exports = (req, res, next) => {
-    const token = req.headers.authorization?.split(' ')[1]; // Extract token from the "Authorization" header
+    const authHeader = req.headers.authorization;
 
-    if (!token) {
-        return res.status(401).json({ error: 'No token provided' });
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return sendErrorResponse(req, res, 401,'Authorization header missing or invalid format');
     }
 
+    const token = authHeader.split(' ')[1];
+
     try {
-        const decoded = verifyToken(token); // Decode the token
-        req.user = decoded; // Attach userId to the request object for later use
-        next(); // Continue to the next route handler
+        req.user = verifyToken(token);
+        next();
     } catch (err) {
-        res.status(401).json({ error: 'Invalid or expired token' });
+        return sendErrorResponse(req, res, err.status,'Invalid or expired token');
     }
 };

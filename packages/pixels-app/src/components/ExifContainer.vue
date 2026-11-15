@@ -7,6 +7,15 @@ import {Separator} from "@/components/ui/separator";
 const props = defineProps<{
     picture: Picture
 }>()
+
+const formatDate = (dateString) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-UK', {
+        dateStyle: 'short',
+        timeStyle: 'short',
+    }).format(date);
+};
 </script>
 
 <template>
@@ -18,7 +27,7 @@ const props = defineProps<{
             </div>
             <div class="flex items-center gap-2">
                 <CalendarDays class="w-4 h-4 shrink-0" />
-                <span>{{ props.picture.takenAt || '-' }}</span>
+                <span>{{ formatDate(props.picture.takenAt) || '-' }}</span>
             </div>
             <div class="flex items-center gap-2">
                 <Camera class="w-4 h-4 shrink-0" />

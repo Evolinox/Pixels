@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {useRoute} from 'vue-router';
 import {useUserStore} from "@/stores/user.store.ts";
@@ -30,7 +30,14 @@ const userBannerUrl = ref("");
 const isMe = route.name === 'Profile';
 
 onMounted(async () => {
-    // Get Userdata
+    await fetchUserData();
+});
+
+watch(() => route.params.userName, async () => {
+    await fetchUserData();
+})
+
+async function fetchUserData() {
     if (isMe) {
         userId.value = userStore.getUserId as string;
         userName.value = userStore.getUserName as string;
@@ -60,7 +67,7 @@ onMounted(async () => {
             userBannerUrl.value = data.banner;
         }
     }
-});
+}
 
 const resolvedAvatarUrl = computed(() => {
     if (userAvatarUrl && userAvatarUrl.value.startsWith('http')) {

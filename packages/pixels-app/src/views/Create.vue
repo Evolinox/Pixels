@@ -52,7 +52,7 @@ const getLocationName = async (lat: number, lon: number): Promise<string | null>
 
     const data = await res.json()
 
-    return data.display_name ?? null
+    return data.address.city ?? null
 }
 
 const extractExif = async (file: File) => {

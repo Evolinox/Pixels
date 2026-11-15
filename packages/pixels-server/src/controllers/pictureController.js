@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const prisma = require('../prisma');
 
 exports.uploadPicture = async (req, res) => {
@@ -40,41 +42,19 @@ exports.getAllPictures = async (req, res) => {
     res.json(pictures);
 };
 
-exports.getLatestPictures = async (req, res) => {
-    const { count, userId } = req.query;
-    const n = parseInt(count) || 10;
+exports.getPictureByCode = async (req, res) => {
+    const code = req.params.code;
+    const filePath = path.join(__dirname, '../../storage', `${code}.png`);
 
-    try {
-        const where = {};
-        if (userId !== undefined) {
-            where.userId = parseInt(userId, 10);
+    // Prüfen, ob die Datei existiert
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            // Datei existiert nicht
+            return res.status(404).json({ error: 'Bild nicht gefunden' });
         }
-        const pictures = await prisma.picture.findMany({
-            where,
-            orderBy: { id: 'desc' },
-            take: n,
-            include: {
-                user: {
-                    select: { id: true, username: true, avatar: true }
-                }
-            }
-        });
 
-        res.json(pictures);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Failed to fetch latest pictures' });
-    }
-};
-
-exports.createComment = async (req, res) => {
-    const { userId, pictureId, content } = req.body;
-    const newComment = await prisma.comment.create({
-        data: {
-            content: content,
-            userId: userId,
-            pictureId: pictureId,
-        }
+        // Wenn sie existiert, geben wir Status 200 zurück.
+        // Wir senden hier nur JSON, da die Preview-Seite nur den Status prüft.
+        return res.status(200).json({ success: true, message: 'Bild gefunden' });
     });
-    res.json(newComment);
-}
+};

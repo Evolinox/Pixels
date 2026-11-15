@@ -7,6 +7,9 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-      - /usr/src/app/storage
+      - pixel_storage:/usr/src/app/storage
     environment:
       - NODE_ENV=development
+
+volumes:
+  pixel_storage:
